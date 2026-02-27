@@ -113,7 +113,7 @@
 
 #define DEFAULT_RX_TYPE         RX_TYPE_SERIAL
 #define SERIALRX_PROVIDER       SERIALRX_SBUS
-#define SERIALRX_UART           SERIAL_PORT_USART2
+#define SERIALRX_UART           SERIAL_PORT_USART3
 
 // *************** I2C/Baro/Mag/Pitot ********************
 #define USE_I2C
@@ -157,7 +157,7 @@
 //#define USE_LED_STRIP
 //#define WS2811_PIN              PA8
 
-// ***************  OTHERS *************************
+// *************** OTHERS *************************
 #define DEFAULT_FEATURES        (FEATURE_TX_PROF_SEL | FEATURE_OSD | FEATURE_CURRENT_METER | FEATURE_VBAT | FEATURE_TELEMETRY | FEATURE_SOFTSERIAL )
 
 #define USE_SERIAL_4WAY_BLHELI_INTERFACE
@@ -166,6 +166,6 @@
 #define TARGET_IO_PORTC         0xffff
 #define TARGET_IO_PORTD         (BIT(2))
 
-#define MAX_PWM_OUTPUT_PORTS    8
+#define MAX_PWM_OUTPUT_PORTS    12
 #define USE_DSHOT
 #define USE_ESC_SENSOR

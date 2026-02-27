@@ -36,10 +36,13 @@ timerHardware_t timerHardware[] = {
     DEF_TIM(TIM2, CH3, PB10, TIM_USE_OUTPUT_AUTO, 0, 0),  // S8
     DEF_TIM(TIM2, CH4, PB11, TIM_USE_OUTPUT_AUTO, 0, 1),  // S9
 
+    // Karabatak ESC Sinyal Çıkışları (Eski T2 ve R2)
+    // DİKKAT: TIM2 çakışmasını önlemek için PA2 ve PA3, donanımsal TIM5'e bağlandı.
+    DEF_TIM(TIM5, CH3, PA2,  TIM_USE_OUTPUT_AUTO, 0, 0),  // T2 Pini (Yeni Motor/ESC Çıkışı)
+    DEF_TIM(TIM5, CH4, PA3,  TIM_USE_OUTPUT_AUTO, 0, 0),  // R2 Pini (Yeni Motor/ESC Çıkışı)
+
     // Diğerleri aşağıya kaydı
     DEF_TIM(TIM12, CH2, PB15, TIM_USE_ANY, 0, 0),         // CAM CONTROL
 };
 
 const int timerHardwareCount = sizeof(timerHardware) / sizeof(timerHardware[0]);
-
-

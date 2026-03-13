@@ -89,12 +89,12 @@
 #define UART1_TX_PIN            PA9
 #define UART1_RX_PIN            PA10
 
-// T2(PA2) ve R2(PA3) Motor Sinyali Icin Ayrildi
+// UART2 IPTAL EDILDI - T2 ve R2 Motor Sinyali Icin Ayrildi
 //#define USE_UART2
 //#define UART2_TX_PIN            PA2
 //#define UART2_RX_PIN            PA3
 
-// T3 ve R3 (ELRS / CRSF Icin Aktif)
+// T3 ve R3 (ELRS Icin ACIK)
 #define USE_UART3
 #define UART3_TX_PIN            PC10
 #define UART3_RX_PIN            PC11
@@ -142,10 +142,9 @@
 #define PITOT_I2C_BUS           BUS_I2C1
 
 // *************** PINIO ***************************
-// PO1 (PC0) pini donanimsal PWM desteklemedigi icin PINIO olarak ayarlandi.
-// Yalnizca Ac/Kapat veya Ileri/Geri yon tetiklemesi (1/0) icin kullanilabilir.
 #define USE_PINIO
 #define USE_PINIOBOX
+// PO1 pini motor surucuye 1/0 tetiklemesi gondermek uzere aktif edildi
 #define PINIO1_PIN              PC0
 #define PINIO2_PIN              PC14
 

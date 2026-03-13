@@ -28,21 +28,18 @@ timerHardware_t timerHardware[] = {
     DEF_TIM(TIM8, CH3, PC8,  TIM_USE_OUTPUT_AUTO, 0, 1),  // S3
     DEF_TIM(TIM8, CH4, PC9,  TIM_USE_OUTPUT_AUTO, 0, 0),  // S4
 
-    // LED Pad'ini (PA8) Motorlardan hemen sonraya aldık ki S5 (Servo 1) bu olsun
-    DEF_TIM(TIM1, CH1, PA8,  TIM_USE_SERVO, 0, 0),        // S5 (Yeni Servo Çıkışımız)
+    // S5 (Servo 1) - LED Pad'inden donusturuldu
+    DEF_TIM(TIM1, CH1, PA8,  TIM_USE_SERVO, 0, 0),        // S5
 
     DEF_TIM(TIM4, CH1, PB6,  TIM_USE_OUTPUT_AUTO, 0, 0),  // S6
     DEF_TIM(TIM4, CH2, PB7,  TIM_USE_OUTPUT_AUTO, 0, 0),  // S7
     DEF_TIM(TIM2, CH3, PB10, TIM_USE_OUTPUT_AUTO, 0, 0),  // S8
     DEF_TIM(TIM2, CH4, PB11, TIM_USE_OUTPUT_AUTO, 0, 1),  // S9
 
-    // Karabatak ESC Sinyal Çıkışları (Eski T2 ve R2)
-    // DİKKAT: TIM2 çakışmasını önlemek için PA2 ve PA3, donanımsal TIM5'e bağlandı.
-    DEF_TIM(TIM5, CH3, PA2,  TIM_USE_OUTPUT_AUTO, 0, 0),  // T2 Pini (Yeni Motor/ESC Çıkışı)
-    DEF_TIM(TIM5, CH4, PA3,  TIM_USE_OUTPUT_AUTO, 0, 0),  // R2 Pini (Yeni Motor/ESC Çıkışı)
-
-    // Diğerleri aşağıya kaydı
-    DEF_TIM(TIM12, CH2, PB15, TIM_USE_ANY, 0, 0),         // CAM CONTROL
+    // DC MOTOR HIZ KONTROL SINYALLERI (PWM)
+    DEF_TIM(TIM5, CH3, PA2,  TIM_USE_OUTPUT_AUTO, 0, 0),  // T2 Pini (Motor Sinyali 1)
+    DEF_TIM(TIM5, CH4, PA3,  TIM_USE_OUTPUT_AUTO, 0, 0),  // R2 Pini (Motor Sinyali 2)
+    DEF_TIM(TIM12, CH2, PB15, TIM_USE_OUTPUT_AUTO, 0, 0), // CC Pini (Motor Sinyali 3)
 };
 
 const int timerHardwareCount = sizeof(timerHardware) / sizeof(timerHardware[0]);

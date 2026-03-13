@@ -89,10 +89,12 @@
 #define UART1_TX_PIN            PA9
 #define UART1_RX_PIN            PA10
 
+// T2(PA2) ve R2(PA3) Motor Sinyali Icin Ayrildi
 //#define USE_UART2
 //#define UART2_TX_PIN            PA2
 //#define UART2_RX_PIN            PA3
 
+// T3 ve R3 (ELRS / CRSF Icin Aktif)
 #define USE_UART3
 #define UART3_TX_PIN            PC10
 #define UART3_RX_PIN            PC11
@@ -109,10 +111,11 @@
 #define UART6_TX_PIN            PC6
 #define UART6_RX_PIN            PC7
 
-#define SERIAL_PORT_COUNT       7
+#define SERIAL_PORT_COUNT       6
 
+// ELRS ALICI AYARLARI
 #define DEFAULT_RX_TYPE         RX_TYPE_SERIAL
-#define SERIALRX_PROVIDER       SERIALRX_SBUS
+#define SERIALRX_PROVIDER       SERIALRX_CRSF
 #define SERIALRX_UART           SERIAL_PORT_USART3
 
 // *************** I2C/Baro/Mag/Pitot ********************
@@ -139,6 +142,8 @@
 #define PITOT_I2C_BUS           BUS_I2C1
 
 // *************** PINIO ***************************
+// PO1 (PC0) pini donanimsal PWM desteklemedigi icin PINIO olarak ayarlandi.
+// Yalnizca Ac/Kapat veya Ileri/Geri yon tetiklemesi (1/0) icin kullanilabilir.
 #define USE_PINIO
 #define USE_PINIOBOX
 #define PINIO1_PIN              PC0
@@ -152,10 +157,6 @@
 #define ADC_CHANNEL_2_PIN           PC1
 #define VBAT_ADC_CHANNEL            ADC_CHN_1
 #define CURRENT_METER_ADC_CHANNEL   ADC_CHN_2
-
-// *************** LED2812 ************************
-//#define USE_LED_STRIP
-//#define WS2811_PIN              PA8
 
 // *************** OTHERS *************************
 #define DEFAULT_FEATURES        (FEATURE_TX_PROF_SEL | FEATURE_OSD | FEATURE_CURRENT_METER | FEATURE_VBAT | FEATURE_TELEMETRY | FEATURE_SOFTSERIAL )

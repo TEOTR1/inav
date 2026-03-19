@@ -22,6 +22,8 @@
 
 #define USE_TARGET_CONFIG
 
+// Not: Buradaki LED0 kartın üzerindeki durum LED'idir (Status LED). 
+// Servo olarak kullanacağınız LED_STRIP pedi ile karıştırılmamalıdır.
 #define LED0                    PC15
 #define BEEPER                  PC13
 #define BEEPER_INVERTED
@@ -89,19 +91,22 @@
 #define UART1_TX_PIN            PA9
 #define UART1_RX_PIN            PA10
 
-// UART2 IPTAL EDILDI - T2 ve R2 Motor Sinyali Icin Ayrildi
-//#define USE_UART2
-//#define UART2_TX_PIN            PA2
-//#define UART2_RX_PIN            PA3
+// --- T2 VE R2 (ELRS İÇİN AKTİF EDİLDİ) ---
+#define USE_UART2
+#define UART2_TX_PIN            PA2
+#define UART2_RX_PIN            PA3
 
-// T3 ve R3 (ELRS Icin ACIK)
-#define USE_UART3
-#define UART3_TX_PIN            PC10
-#define UART3_RX_PIN            PC11
+// --- T3 VE R3 (SERVO İÇİN İPTAL EDİLDİ) ---
+// Timer çakışmasını önlemek için UART3 kapatıldı.
+//#define USE_UART3
+//#define UART3_TX_PIN            PC10
+//#define UART3_RX_PIN            PC11
 
-#define USE_UART4
-#define UART4_TX_PIN            PA0
-#define UART4_RX_PIN            PA1
+// NOT: Eğer LED STRIP için PA0 pinini kullanacaksanız, UART4'ü de kapatmanız gerekir. 
+// Eğer farklı bir pin kullanacaksanız UART4 açık kalabilir. Şimdilik kapalı tutuluyor.
+//#define USE_UART4
+//#define UART4_TX_PIN            PA0
+//#define UART4_RX_PIN            PA1
 
 #define USE_UART5
 #define UART5_TX_PIN            PC12
@@ -113,10 +118,10 @@
 
 #define SERIAL_PORT_COUNT       6
 
-// ELRS ALICI AYARLARI
+// --- ELRS ALICI AYARLARI GÜNCELLENDİ ---
 #define DEFAULT_RX_TYPE         RX_TYPE_SERIAL
 #define SERIALRX_PROVIDER       SERIALRX_CRSF
-#define SERIALRX_UART           SERIAL_PORT_USART3
+#define SERIALRX_UART           SERIAL_PORT_USART2 // UART3 yerine UART2 yapıldı
 
 // *************** I2C/Baro/Mag/Pitot ********************
 #define USE_I2C

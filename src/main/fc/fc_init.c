@@ -209,6 +209,10 @@ void init(void)
     // Initialize system and CPU clocks to their initial values
     systemInit();
 
+    // --- BİZİM EKLEDİĞİMİZ KOD (GPS/PUSULA UYANMA BEKLEMESİ) ---
+    delay(1500); 
+    // ----------------------------------------------------------
+
 #if !defined(SITL_BUILD)
     __enable_irq();
 #endif

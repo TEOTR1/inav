@@ -369,15 +369,29 @@ static void applyTurtleModeToMotors(void) {
 void FAST_CODE writeMotors(void)
 {
 #if !defined(SITL_BUILD)
+    // --- ÇİFT AŞAMALI PRE-ARM (%1) OVERRIDE BAŞLANGICI ---
+    // Drone tam arm olmamışsa (!ARMING_FLAG) ve kumandadan Pre-arm (BOXPREARM) anahtarı açıksa aktif olur
+    bool isPrearmOnly = !ARMING_FLAG(ARMED) && IS_RC_MODE_ACTIVE(BOXPREARM);
+    
+    // %1 Gaz için PWM sinyali (Standart mincommand genelde 1000'dir. 1000 + 10 = 1010 -> ~%1 Gaz)
+    int16_t prearmMotorCmd = motorConfig()->mincommand + 10; 
+    
+    // DShot ESC'lerin %1'lik sinyali "Stop" sanıp motoru durdurmaması için güvenlik barajını aşağı çekiyoruz
+    int16_t activeStopThreshold = isPrearmOnly ? (motorConfig()->mincommand + 5) : throttleIdleValue;
+    // --- OVERRIDE BİTİŞİ ---
+
     for (int i = 0; i < motorCount; i++) {
         uint16_t motorValue;
+        
+        // Eğer Pre-arm modundaysak INAV'ın standart 0 komutunu (motor[i]) ezip kendi %1 komutumuzu basıyoruz
+        int16_t currentMotorCmd = isPrearmOnly ? prearmMotorCmd : motor[i];
+
 #ifdef USE_DSHOT
         if (isMotorProtocolDigital()) {
-            // If we use DSHOT we need to convert motorValue to DSHOT ranges
             if (feature(FEATURE_REVERSIBLE_MOTORS)) {
                 if (reversibleMotorsThrottleState == MOTOR_DIRECTION_FORWARD) {
                     motorValue = handleOutputScaling(
-                        motor[i],
+                        currentMotorCmd, 
                         throttleRangeMin,
                         DSHOT_DISARM_COMMAND,
                         throttleRangeMin,
@@ -388,7 +402,7 @@ void FAST_CODE writeMotors(void)
                     );
                 } else {
                     motorValue = handleOutputScaling(
-                        motor[i],
+                        currentMotorCmd, 
                         throttleRangeMax,
                         DSHOT_DISARM_COMMAND,
                         throttleRangeMin,
@@ -401,8 +415,8 @@ void FAST_CODE writeMotors(void)
             }
             else {
                 motorValue = handleOutputScaling(
-                    motor[i],
-                    throttleIdleValue,
+                    currentMotorCmd, 
+                    activeStopThreshold, 
                     DSHOT_DISARM_COMMAND,
                     motorConfig()->mincommand,
                     getMaxThrottle(),
@@ -418,9 +432,9 @@ void FAST_CODE writeMotors(void)
             if (feature(FEATURE_REVERSIBLE_MOTORS)) {
                 if (reversibleMotorsThrottleState == MOTOR_DIRECTION_FORWARD) {
                     motorValue = handleOutputScaling(
-                        motor[i],
+                        currentMotorCmd, 
                         throttleRangeMin,
-                        motor[i],
+                        currentMotorCmd, 
                         throttleRangeMin,
                         throttleRangeMax,
                         reversibleMotorsConfig()->deadband_high,
@@ -429,9 +443,9 @@ void FAST_CODE writeMotors(void)
                     );
                 } else {
                     motorValue = handleOutputScaling(
-                        motor[i],
+                        currentMotorCmd, 
                         throttleRangeMax,
-                        motor[i],
+                        currentMotorCmd, 
                         throttleRangeMin,
                         throttleRangeMax,
                         motorConfig()->mincommand,
@@ -440,7 +454,7 @@ void FAST_CODE writeMotors(void)
                     );
                 }
             } else {
-                motorValue = motor[i];
+                motorValue = currentMotorCmd; 
             }
         }
 

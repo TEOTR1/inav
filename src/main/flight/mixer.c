@@ -373,11 +373,8 @@ void FAST_CODE writeMotors(void)
     // Drone tam arm olmamışsa (!ARMING_FLAG) ve kumandadan Pre-arm (BOXPREARM) anahtarı açıksa aktif olur
     bool isPrearmOnly = !ARMING_FLAG(ARMED) && IS_RC_MODE_ACTIVE(BOXPREARM);
     
-    // %1 Gaz için PWM sinyali (Standart mincommand genelde 1000'dir. 1000 + 10 = 1010 -> ~%1 Gaz)
+    // %1 Gaz için PWM sinyali
     int16_t prearmMotorCmd = motorConfig()->mincommand + 10; 
-    
-    // DShot ESC'lerin %1'lik sinyali "Stop" sanıp motoru durdurmaması için güvenlik barajını aşağı çekiyoruz
-    int16_t activeStopThreshold = isPrearmOnly ? (motorConfig()->mincommand + 5) : throttleIdleValue;
     // --- OVERRIDE BİTİŞİ ---
 
     for (int i = 0; i < motorCount; i++) {
@@ -414,6 +411,9 @@ void FAST_CODE writeMotors(void)
                 }
             }
             else {
+                // DShot ESC'lerin %1'lik sinyali "Stop" sanıp motoru durdurmaması için güvenlik barajını içeri taşıdık
+                int16_t activeStopThreshold = isPrearmOnly ? (motorConfig()->mincommand + 5) : throttleIdleValue;
+
                 motorValue = handleOutputScaling(
                     currentMotorCmd, 
                     activeStopThreshold, 
